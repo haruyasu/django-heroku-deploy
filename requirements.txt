@@ -1,1 +1,3 @@
-Django~=3.2.6
+-r requirements-dev.text
+gunicorn
+psycopg2
