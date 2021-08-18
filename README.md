@@ -4,7 +4,9 @@
 
 ```
 Django~=3.2.6
-dj_static
+dj-database-url==0.5.0
+dj-static==0.0.6
+python-decouple==3.3
 ```
 
 ## requirements.txt
@@ -42,7 +44,17 @@ application = Cling(get_wsgi_application())
 ## settings.py
 
 ```
+from pathlib import Path
+from decouple import config
+from dj_database_url import parse as dburl
+
 ALLOWED_HOSTS = ['*']
+
+default_dburl = 'sqlite:///' + str(BASE_DIR / "db.sqlite3")
+
+DATABASES = {
+    'default': config('DATABASE_URL', default=default_dburl, cast=dburl),
+}
 
 STATIC_URL = '/static/'
 STATIC_ROOT = str(BASE_DIR / 'staticfiles')
